@@ -13,8 +13,8 @@ using namespace std;
 
 template <class Type>
 class prefixStack {
-    //Space in stack:
-    const int max = 50;
+    //Space in stack: prefix only needs a few, we can add more if we want but no need
+    const int max = 15;
 
 public:
     //constructor that sets basic stack values
