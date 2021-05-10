@@ -1,5 +1,5 @@
 //Question 3: Test a stack's speed (with millions of operations) as to which is faster: an array based
-//stack or a linked list based stack.
+//stack or a linked list based stack. THIS IS HEADER FILE
 
 #ifndef H_arrayLL // defining header file
 #define H_arrayLL // defining header file
@@ -10,6 +10,9 @@
 // by using this namespace, we don't need to prefix things with the std:: namespace
 using namespace std; 
 
+
+// LINKED LIST STACK DECLARATION HERE
+
 template <class Type> // Declare a template of class Type
 struct nodeType // Declare a nodeType template for LL nodes
 {
@@ -18,8 +21,8 @@ struct nodeType // Declare a nodeType template for LL nodes
 };
 
 template <class Type> // declare a template of class Type
-// From the linkedStackType class we inherit the stackADT file we included
-class linkedStackType: public stackADT<Type> 
+// From the linkedStackType class we inherit the stackADT file we included (not inheriting in this func)
+class linkedStackType
 {
 
 // Declaring public functions:
@@ -241,7 +244,123 @@ const linkedStackType<Type>& linkedStackType<Type>::operator=(const linkedStackT
 
 //ARRAY BASED STACK AFTER THIS:
 
+template <class type>
+class arrayStack {
+    //Space in stack: 1 million for the numbers
+    const int max = 1000000;
 
+public:
+    //constructor that sets basic stack values
+    arrayStack();
+    //Const takes in int
+    arrayStack(int n);
+    //Destructor
+    ~arrayStack();
+    //Size of stack, push, pop, top, variables
+    void push(const type & newItem);
+    void pop();
+    type top() const;
+    int size() const;
+    //Function that returns true if the stack is empty
+    bool isEmptyStack() const;
+    // Function that returns true if the stack is Full
+    bool isFullStack() const;
+    int stackTop;
+private:
+    //Pointer to top of stack
+    
+    type *array;
+    int maxSize;
+
+};
+
+template <class type>
+arrayStack<type> :: arrayStack()
+{
+    // Maximum size of stack will be equivalent to max size we set
+    maxSize = max;
+    // Set array space to be that of the max value
+    array = new type[max];
+    // Set topmost value of stack to -1
+    stackTop = -1;
+}
+
+//Same as top function, just adjust when input is inserted 
+template <class type>
+arrayStack<type> :: arrayStack(int n)
+{
+    maxSize = n;
+    array = new type[maxSize];
+    stackTop = -1;
+}
+
+// Destructor
+template <class type>
+arrayStack<type> :: ~arrayStack()
+{
+    // Delete the array we created
+    delete[] array;
+}
+
+//Push values into stack
+template <class type>
+void arrayStack<type> :: push(const type& newItem)
+{
+    // If stack is full, print the following message
+    if(size() == max) {
+        cout << "Cannot add to full stack. Stack Overflow";
+    }
+    // Insert newItem (newest stack value) into the stack
+    array[stackTop++] = newItem;
+}
+
+// Pop values off the stack
+template <class type>
+void arrayStack<type> :: pop()
+{
+    // If the stack is empty, print this
+    if (isEmptyStack() == true) {
+        cout << "Cannot remove from an empty stack." << endl;
+    }
+    // Pop topmost element from stack
+    stackTop--;
+}
+
+//Function to find stack size
+template <class type>
+int arrayStack<type> :: size() const 
+{
+    // Total size is stacktops value +1 
+    return stackTop + 1;
+}
+
+template <class type>
+type arrayStack<type>:: top() const 
+{
+    // If stack is empty,
+    if(isEmptyStack()==true) {
+        cout << "Stack is empty, no top";
+    }
+    // Return stackTops value which is essentially topmost value
+    return array[stackTop];
+}
+
+template <class type>
+bool arrayStack<type>:: isEmptyStack() const
+{
+    // If top of stack is nullptr, then return
+    return(stackTop < 0);
+}
+
+template <class type>// Create Template function from class Type
+// Function that returns false if the stack is not full
+bool arrayStack<type>:: isFullStack() const
+{
+    // If stack is not full, return true
+    if (size >= max) {
+        return true;
+    }
+} 
 
 
 
@@ -249,3 +368,4 @@ const linkedStackType<Type>& linkedStackType<Type>::operator=(const linkedStackT
 
 
 #endif // End of arrayLL file
+//Umar Kagzi
